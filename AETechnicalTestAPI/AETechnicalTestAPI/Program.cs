@@ -1,8 +1,14 @@
+using AETechnicalTestAPI.Models;
+using AETechnicalTestAPI.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddDbContext<VehicleContext>(options => options.UseSqlServer("server=.;database=AETechnicalTestDb;Trusted_Connection=true"));
+builder.Services.AddScoped<IVehiclesRepository, SqlVehicleRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

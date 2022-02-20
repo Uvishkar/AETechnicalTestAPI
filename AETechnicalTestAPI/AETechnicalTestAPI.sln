@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AETechnicalTestAPI", "AETechnicalTestAPI\AETechnicalTestAPI.csproj", "{68FEED42-0CAA-4E2B-AA10-3E42E84DC8F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvLoader Test", "CsvLoader Test\CsvLoader Test.csproj", "{00FAAB2F-449E-4A08-8BB4-19CDBCB3BF77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{68FEED42-0CAA-4E2B-AA10-3E42E84DC8F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68FEED42-0CAA-4E2B-AA10-3E42E84DC8F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68FEED42-0CAA-4E2B-AA10-3E42E84DC8F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00FAAB2F-449E-4A08-8BB4-19CDBCB3BF77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00FAAB2F-449E-4A08-8BB4-19CDBCB3BF77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00FAAB2F-449E-4A08-8BB4-19CDBCB3BF77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00FAAB2F-449E-4A08-8BB4-19CDBCB3BF77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
