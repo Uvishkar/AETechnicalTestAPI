@@ -13,7 +13,9 @@ namespace CsvLoader_Test
         [Test]
         public void Test1()
         {
-           CsvLoader.GetDataTabletFromCSVFile();
+
+            //CsvLoader.SaveToDatabase();
+           CsvLoader.CSVDataloader();
             //CsvLoader.InsertDataIntoSQLServerUsingSQLBulkCopy(csvData);
             //Assert.Pass();
         }

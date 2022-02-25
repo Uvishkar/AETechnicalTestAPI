@@ -1,98 +1,92 @@
 ﻿using AETechnicalTestAPI.Domain_Models;
-using CsvHelper;
+using AETechnicalTestAPI.Services;
+using CsvHelper.Configuration;
+using LINQtoCSV;
 using Microsoft.Data.SqlClient;
-using Microsoft.VisualBasic.FileIO;
-using System.Data;
-using System.Globalization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
-using Newtonsoft.Json;
-using AETechnicalTestAPI.Services;
+using System.Text;
+using System.Threading.Tasks;
+
 
 namespace AETechnicalTestAPI
 {
     public class CsvLoader
-    {
-        public static void GetDataTabletFromCSVFile()
+    {   /*Loading Csv using a Csv helper library https://joshclose.github.io/CsvHelper/ */
+        public static void CSVDataloader()
         {
-            using var streamReader = File.OpenText("C:/AE Technical Test/AE Technical Test API/AETechnicalTestAPI/AETechnicalTestAPI/AETechnicalTestAPI/AETechnicalTestAPI/Assets/Vehicles.csv");
-            using var csvReader = new CsvReader(streamReader, CultureInfo.CurrentCulture);
-
-            var vehicles = csvReader.GetRecords<object>();
-
-
-
-
-
-            List<CsvVehicleData> csvVehicleList = new List<CsvVehicleData>();
-            var csv = new List<string[]>();
-            var lines = System.IO.File.ReadAllLines(@"C:/AE Technical Test/AE Technical Test API/AETechnicalTestAPI/AETechnicalTestAPI/AETechnicalTestAPI/AETechnicalTestAPI/Assets/Vehicles.csv");
-            foreach (string line in lines)
+            var csvFileDescription = new CsvFileDescription
             {
-                csv.Add(line.Split(';'));
-            }
+                FirstLineHasColumnNames = true,
+                IgnoreUnknownColumns = true,
+                SeparatorChar = ';',
+                UseFieldIndexForReadingData = true
+            };
 
-            foreach (var item in csv)
+            var csvContext = new CsvContext();
+            var vehicles = csvContext.Read<Vehicle>(@"C:\AE Technical Test\AE Technical Test API\AETechnicalTestAPI\AETechnicalTestAPI\AETechnicalTestAPI\AETechnicalTestAPI\Assets\Vehicles.csv", csvFileDescription);
+            try
             {
-                var valid = Validation.CSVValidationChecks(item);
-                if (valid)
+                foreach (var vehicle in vehicles)
                 {
-                    CsvVehicleData csvVehicleData = new CsvVehicleData()
+
+                    var valid = Validation.CSVValidationChecks(vehicle);
+                    if (valid)
                     {
-                        TYPE = Convert.ToString(item[0]),
-                        MAKE = Convert.ToString(item[1]),
-                        MODEL = Convert.ToString(item[2]),
-                        YEAR = Convert.ToInt32(item[3]),
-                        WHEELCOUNT = Convert.ToInt32(item[4]),
-                        FUELTYPE = Convert.ToString(item[5]),
-                        ACTIVE = Convert.ToBoolean(item[6])
-                    };
-                    csvVehicleList.Add(csvVehicleData);
+                        var Tax = Tax_Calculation.Taxcalculator(vehicle);
+                        var RoadWorthyCheck = RoadWorthy.RoadworthyCheck(vehicle);
+                        SaveToDatabase(vehicle);
+                    }
+
                 }
             }
-
-            //InsertDataIntoSQLServerUsingSQLBulkCopy(csvVehicleList)
-        }
-
-        public static void InsertDataIntoSQLServerUsingSQLBulkCopy(List<CsvVehicleData> csvVehicleDataList)
-        {
-            using (SqlConnection dbConnection = new SqlConnection("server =.; database = AETechnicalTestDb; Trusted_Connection = true"))
+            catch (Exception ex)
             {
-                dbConnection.Open();
-
-                string insertStmt = "INSERT INTO dbo.Vehicle(REPORT_ID, ROLE_ID, CREATED_BY, CREATED) " +
-                    "VALUES(@ReportID, @RoleID, 'SYSTEM', CURRENT_TIMESTAMP)";
-
-                //using (SqlBulkCopy s = new SqlBulkCopy(dbConnection))
-                //{
-                //    s.DestinationTableName = "Vehicle";
-
-                //    //obj
-
-                //    new Vehicle()
-                //    {
-                //        ID = new Guid(),
-                //        Make = "" ,
-                //        Model = "",
-                //        VehicleType = "",
-                //        FuelType = "",
-                //        Year = 1,
-                //        WheelCount = 4,
-                //        Tax = 3,
-                //        Active = true
-                //    };
-
-                //    //add to our liost
-
-                //    //vehicle.save()
-
-                //    foreach (var column in csvFileData.Columns)
-                //        s.ColumnMappings.Add(column.ToString(), column.ToString());
-                //    s.WriteToServer(csvFileData);
-                //}
+                Console.WriteLine("Error Generated. Details: " + ex.ToString());
             }
+            
+
+
+
         }
+        public static void SaveToDatabase(Vehicle vehicle)
+        {
+
+
+            string connectionString = "server =.; database = AETechnicalTestDb; Trusted_Connection = true";
+            SqlConnection connection = new SqlConnection(@connectionString);
+            string query = "INSERT into Vehicle (VehicleType,Make,Model,Year,WheelCount,FuelType,Active,Tax,RoadWorthyTestInterval) VALUES (@VehicleType,@Make,@Model,@Year,@WheelCount,@FuelType,@Active,@Tax,@RoadWorthyTestInterval)";
+            SqlCommand command = new SqlCommand(query, connection);
+
+         
+            command.Parameters.AddWithValue("@VehicleType", vehicle.VehicleType);
+            command.Parameters.AddWithValue("@Make", vehicle.Make);
+            command.Parameters.AddWithValue("@Model", vehicle.Model);
+            command.Parameters.AddWithValue("@Year", vehicle.Year);
+            command.Parameters.AddWithValue("@WheelCount", vehicle.WheelCount);
+            command.Parameters.AddWithValue("@FuelType", vehicle.FuelType);
+            command.Parameters.AddWithValue("@Active", vehicle.Active);
+            command.Parameters.AddWithValue("@Tax", vehicle.Tax);
+            command.Parameters.AddWithValue("@RoadWorthyTestInterval", vehicle.RoadWorthyTestInterval);
+
+            try
+            {
+                connection.Open();
+                command.ExecuteNonQuery();
+                Console.WriteLine("Record Inserted Successfully");
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine("Error Generated. Details: " + e.ToString());
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+        }
+
     }
 }
+

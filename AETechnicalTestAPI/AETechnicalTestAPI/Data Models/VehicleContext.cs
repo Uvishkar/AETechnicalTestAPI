@@ -9,7 +9,6 @@ namespace AETechnicalTestAPI.Models
         {
 
         }
-
         public DbSet<Vehicle> Vehicle { get; set; }
     }
 }
