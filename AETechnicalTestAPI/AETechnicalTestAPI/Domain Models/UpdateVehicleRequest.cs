@@ -2,14 +2,15 @@
 {
     public class UpdateVehicleRequest
     {
-        public int ID { get; set; }
-        public string Make { get; set; } = string.Empty;
-        public string Model { get; set; } = string.Empty;
-        public int Year { get; set; }
-        public int WheelCount { get; set; }
-        public string FuelType { get; set; } = string.Empty;
-        public bool Active { get; set; }
-        public int Tax { get; set; }
-        public string RoadWorthyTestInterval { get; set; } = string.Empty;
+
+        public string vehicleType { get; set; } = string.Empty;
+        public string make { get; set; } = string.Empty;
+        public string model { get; set; } = string.Empty;
+        public int year { get; set; }
+        public int wheelCount { get; set; }
+        public string fuelType { get; set; } = string.Empty;
+        public bool active { get; set; }
+        public int tax { get; set; }
+        public string roadWorthyTestInterval { get; set; } = string.Empty;
     }
 }

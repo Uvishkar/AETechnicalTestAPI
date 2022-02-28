@@ -56,7 +56,7 @@ namespace AETechnicalTestAPI.Controllers
             if (await vehicleRepository.Exists(ID))
             {
                 // Update Details
-                var updatedVehicle = await vehicleRepository.UpdateVehicle(ID, mapper.Map<Vehicle>(request));
+                var updatedVehicle = await vehicleRepository.UpdateVehicle(ID, mapper.Map<DataModels.Vehicle>(request));
 
                 if (updatedVehicle != null)
                 {

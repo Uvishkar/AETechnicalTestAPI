@@ -12,6 +12,6 @@ namespace AETechnicalTestAPI.Repositories
         Task<bool> Exists(int ID);
         Task<Vehicle> DeleteVehicle(int ID);
         Task<Vehicle> AddVehicle(Vehicle request);
-        Task<Vehicle> UpdateVehicle(int iD, Domain_Models.Vehicle vehicle);
+        Task<Vehicle> UpdateVehicle(int iD, Vehicle vehicle);
     }
 }

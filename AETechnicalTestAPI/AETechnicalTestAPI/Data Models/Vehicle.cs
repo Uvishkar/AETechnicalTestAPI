@@ -8,14 +8,14 @@ namespace AETechnicalTestAPI.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int ID {get; set;}
-        public string VehicleType { get; set; } = String.Empty;
-        public String Make { get; set; } = String.Empty;
-        public String Model { get; set; } = String.Empty;
+        public string VehicleType { get; set; } 
+        public string Make { get; set; } 
+        public string Model { get; set; } 
         public int Year { get; set; }
         public int WheelCount { get; set; }
-        public String FuelType { get; set; } = String.Empty;
+        public string FuelType { get; set; } 
         public bool Active { get; set; }
         public int Tax { get; set; }
-        public string RoadWorthyTestInterval { get; set; } = string.Empty;
+        public string RoadWorthyTestInterval { get; set; } 
     }
 }

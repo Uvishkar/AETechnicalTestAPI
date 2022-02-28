@@ -53,7 +53,7 @@ namespace AETechnicalTestAPI.Repositories
             return vehicle.Entity;
         }
 
-        public async Task<Vehicle> UpdateVehicle(int ID, Domain_Models.Vehicle vehicle)
+        public async Task<Vehicle> UpdateVehicle(int ID, Models.Vehicle vehicle)
         {
             var existingVehicle = await GetVehicleAsync(ID);
             if (existingVehicle != null)

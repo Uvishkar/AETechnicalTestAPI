@@ -18,13 +18,14 @@ builder.Services.AddCors((options) =>
 }
 );
 builder.Services.AddControllers();
+builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<VehicleContext>(options => options.UseSqlServer("server=.;database=AETechnicalTestDb;Trusted_Connection=true"));
 builder.Services.AddScoped<IVehiclesRepository, SqlVehicleRepository>();
-
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
 //builder.Services.AddMvc(options =>
 //{
 //    options.SuppressAsyncSuffixInActionNames = false;

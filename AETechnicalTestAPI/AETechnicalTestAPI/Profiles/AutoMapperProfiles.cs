@@ -11,11 +11,9 @@ namespace StudentAdminPortal.API.Profiles
         {
             CreateMap<DataModels.Vehicle, Vehicle>()
                 .ReverseMap();
-            CreateMap<UpdateVehicleRequest, DataModels.Vehicle>()
-                .AfterMap<UpdateVehicleRequestAfterMap>();
+            CreateMap<UpdateVehicleRequest, DataModels.Vehicle>();
 
-            CreateMap<AddVehicleRequest, DataModels.Vehicle>()
-                .AfterMap<AddVehicleRequestAfterMap>();
+            CreateMap<AddVehicleRequest, DataModels.Vehicle>();
         }
     }
 }

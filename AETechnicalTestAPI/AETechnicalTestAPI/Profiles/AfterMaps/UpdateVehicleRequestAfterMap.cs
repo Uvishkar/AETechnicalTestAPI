@@ -7,11 +7,7 @@ namespace AETechnicalTestAPI.Profiles.AfterMaps
     {
         public void Process(UpdateVehicleRequest source, DataModels.Vehicle destination, ResolutionContext context)
         {
-        //    destination.Address = new DataModels.Address()
-        //    {
-        //        PhysicalAddress = source.PhysicalAddress,
-        //        PostalAddress = source.PostalAddress
-        //    };
+        
         }
     }
 }
